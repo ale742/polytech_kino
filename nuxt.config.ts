@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
     modules: ['@pinia/nuxt'],
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   app: {
     head: {
       link: [
