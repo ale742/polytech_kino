@@ -20,6 +20,13 @@ const resetFilter = () => {
   filter()
 }
 
+const goto = (page: number) => {
+  page = (page < 1) ? 1 : page;
+  page = (page > filmStore.totalPages) ? filmStore.totalPages :page;
+  filmStore.currentPage = page;
+  filmStore.fetchFilms();
+}
+
 </script>
 
 <template>
@@ -56,7 +63,7 @@ const resetFilter = () => {
 
 
 
-  <div v-if="!filmStore.isLoading" class="row row-cols-1 row-cols-md-3 g-4">
+  <div v-if="!filmStore.isLoading" class="row row-cols-1 row-cols-md-3 my-1 g-4">
     <div class="col" v-for="film in filmStore.films" :key="film.id">
       <div class="card h-100">
         <img v-if="film.link_img" :src="film.link_img" class="card-img-top" alt="tor">
@@ -74,8 +81,8 @@ const resetFilter = () => {
 
 
         </div>
-        <div class="cart-footer">
-          <button class="btn btn-outline-success me-3" type="submit">смотреть</button>
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button class="btn btn-outline-info my-4" type="submit">смотреть</button>
         </div>
       </div>
     </div>
@@ -89,13 +96,33 @@ const resetFilter = () => {
 
   </div>
 
-  <nav class="d-flex justify-content-center my-5" aria-label="Page navigation example">
+  <nav v-if="!filmStore.isLoading" class="d-flex justify-content-center my-5" aria-label="Page navigation example">
     <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      <li
+          :class="{'disabled' : filmStore.currentPage === 1} "
+          class="page-item"
+      >
+        <a
+            @click.prevent = "goto(filmStore.currentPage -1)"
+            class="page-link"
+            href="#">Previous</a>
+      </li>
+      <li
+          v-for="page in filmStore.totalPages"
+          :key="page.id"
+          class="page-item"
+      :class="{'active' : page === filmStore.currentPage}"
+      >
+        <a @click.prevent="goto(page)"
+           class="page-link"
+           href="#">{{page}}</a></li>
+      <li
+          :class="{'disabled' : filmStore.currentPage === 10}"
+          class="page-item">
+        <a
+            @click.prevent = "goto(filmStore.currentPage + 1)"
+            class="page-link"
+            href="#">Next</a></li>
     </ul>
   </nav>
 

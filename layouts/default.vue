@@ -26,11 +26,12 @@
       <slot />
     </div>
   </main>
-<!--  <footer class="footer mt-auto py-3 bg-body-tertiary fixed-bottom">-->
-<!--    <div class="container">-->
-<!--      <span class="text-body-secondary">&copu;KinoTower-2024</span>-->
-<!--    </div>-->
-<!--  </footer>-->
+
+  <footer class="footer mt-auto py-0,5 bg-body-tertiary fixed-bottom">
+    <div class="container">
+      <span class="text-body-secondary">&copy;KinoTower-2024</span>
+    </div>
+  </footer>
 
 
 
